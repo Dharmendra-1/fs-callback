@@ -1,0 +1,11 @@
+{
+  "name": "callback",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Dharmendra-1/fs-callback.git",
+  "author": "Dharmendra-1 <dharmendra.singh.17@mountblue.tech>",
+  "license": "MIT",
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}
