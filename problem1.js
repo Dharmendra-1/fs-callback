@@ -1,52 +1,52 @@
 const fs = require('fs');
 const path = require('path');
 
-const fileSystemAndRemoving = (data, number) => {
-  const dirname = './RandomJsonFile';
-  if (Object.keys(data).length === 0 || !number) {
-    throw new Error('data is Empty or not a number');
-  }
-
-  try {
-    fs.mkdir(path.join(__dirname, dirname), (err) => {
-      if (err) {
-        throw new Error('unable to create directory');
+const createDirectory = (dirname) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(path.join(__dirname, dirname), (error) => {
+      if (error) {
+        reject('unable to create directory');
+      } else {
+        resolve(`${dirname} created sucessfully..`);
       }
     });
-
-    for (let index = 1; index <= number; index++) {
-      fs.writeFile(
-        `./RandomJsonFile/${index}.json`,
-        JSON.stringify(data),
-        'utf-8',
-        (error) => {
-          if (error) {
-            throw new Error('File path is not correct.');
-          }
-        }
-      );
-    }
-
-    setTimeout(() => {
-      for (let index = 1; index <= number; index++) {
-        let filename = path.join(__dirname, dirname, `${index}.json`);
-
-        fs.unlink(filename, (error) => {
-          if (error) {
-            throw new Error('unable to find file location');
-          }
-        });
-      }
-
-      fs.rmdir(path.join(__dirname, dirname), (error) => {
-        if (error) {
-          throw new Error('File Does Not Exists ...');
-        }
-      });
-    }, 5000);
-  } catch (error) {
-    console.log(error.message);
-  }
+  });
 };
 
-module.exports = fileSystemAndRemoving;
+const writeFile = (filename, data) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filename, data, 'utf-8', (error) => {
+      if (error) {
+        reject('File path is not correct.');
+      } else {
+        resolve(`${filename} is created sucessfully..`);
+      }
+    });
+  });
+};
+
+const DeleteFile = (filename) => {
+  return new Promise((resolve, reject) => {
+    fs.unlink(filename, (error) => {
+      if (error) {
+        reject('File Not delete..');
+      } else {
+        resolve(`${filename} is Deleted`);
+      }
+    });
+  });
+};
+
+const removeDirectory = (dirname) => {
+  return new Promise((resolve, reject) => {
+    fs.rmdir(dirname, (error) => {
+      if (error) {
+        reject(`${dirname} can't delete`);
+      } else {
+        resolve(`${dirname} is delete`);
+      }
+    });
+  });
+};
+
+module.exports = { createDirectory, writeFile, DeleteFile, removeDirectory };
