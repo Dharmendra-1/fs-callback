@@ -37,13 +37,7 @@ const fileSystemAndRemoving = (data, number) => {
           }
         });
       }
-
-      fs.rmdir(path.join(__dirname, dirname), (error) => {
-        if (error) {
-          throw new Error('File Does Not Exists ...');
-        }
-      });
-    }, 5000);
+    }, 2 * 1000);
   } catch (error) {
     console.log(error.message);
   }
