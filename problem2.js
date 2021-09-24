@@ -10,13 +10,13 @@ const fileSystemOperation = () => {
         let upperCaseData = data.toUpperCase();
         console.log('lipsum.txt File Readed..');
 
-        fs.writeFile('fileNames.txt', upperCaseData, 'utf-8', (error) => {
+        fs.writeFile('UpperCase.txt', upperCaseData, 'utf-8', (error) => {
           if (error) {
             throw new Error('File Does Not Exists');
           } else {
-            console.log('fileNames.txt File is created..');
+            console.log('UpperCase.txt File is created..');
 
-            let filePath = path.join(__dirname, 'fileNames.txt');
+            let filePath = path.join(__dirname, 'UpperCase.txt');
 
             fs.readFile(filePath, 'utf-8', (error, data) => {
               if (error) {
@@ -27,18 +27,18 @@ const fileSystemOperation = () => {
                 );
 
                 fs.writeFile(
-                  'fileNames.txt',
+                  'LowerCase.txt',
                   lowerCaseData,
                   'utf-8',
                   (error) => {
                     if (error) {
-                      throw new Error('fileNames.txt file does not exists');
+                      throw new Error('LowerCase.txt file does not exists');
                     } else {
-                      console.log('fileNames.txt File is created..');
+                      console.log('LowerCase.txt File is created..');
 
-                      fs.readFile('fileNames.txt', 'utf-8', (error, data) => {
+                      fs.readFile('LowerCase.txt', 'utf-8', (error, data) => {
                         if (error) {
-                          throw new Error('fileNames.txt file does not exists');
+                          throw new Error('LowerCase.txt file does not exists');
                         } else {
                           console.log('Reading fileNames.txt File data..');
 
@@ -47,36 +47,42 @@ const fileSystemOperation = () => {
                           );
 
                           fs.writeFile(
-                            'fileNames.txt',
+                            'sortedData.txt',
                             sortedData,
                             'utf-8',
                             (error) => {
                               if (error) {
                                 throw new Error(
-                                  'fileNames.txt file is does not exist..'
+                                  'sortedData.txt file is does not exist..'
                                 );
                               } else {
-                                console.log('fileNames.txt is created ..');
+                                console.log('sortedData.txt is created ..');
 
                                 fs.readFile(
-                                  'fileNames.txt',
+                                  'sortedData.txt',
                                   'utf-8',
                                   (error, data) => {
                                     if (error) {
                                       throw new Error(
-                                        'fileNames.txt file is does not exist..'
+                                        'sortedData.txt file is does not exist..'
                                       );
                                     } else {
                                       console.log(data);
-
-                                      fs.unlink(
-                                        path.join(__dirname, 'fileNames.txt'),
-                                        (error) => {
-                                          if (error) {
-                                            console.log(error);
+                                      let arr = [
+                                        'LowerCase.txt',
+                                        'UpperCase.txt',
+                                        'sortedData.txt',
+                                      ];
+                                      arr.forEach((file) => {
+                                        fs.unlink(
+                                          path.join(__dirname, file),
+                                          (error) => {
+                                            if (error) {
+                                              console.log(error);
+                                            }
                                           }
-                                        }
-                                      );
+                                        );
+                                      });
                                     }
                                   }
                                 );
